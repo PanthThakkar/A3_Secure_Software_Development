@@ -4,10 +4,17 @@ include("config.php");
 include("lib/db.php");
 
 $aid = $_GET['aid'];
-#echo "aid=".$aid."<br>";
+$author = $_SESSION['id'];
+$result=get_article_perms($dbconn, $aid);
+$row = pg_fetch_array($result, 0);
+if($row['author'] == $author || $author == "1"){
 $result = delete_article($dbconn, $aid);
+}
+echo $author;
+echo $row['author'];
+#echo "aid=".$aid."<br>";
 #echo "result=".$result."<br>";
 # Check result
-header("Location: /admin.php");
+echo "<script> location.href='/admin.php'; </script>"
 
 ?>
