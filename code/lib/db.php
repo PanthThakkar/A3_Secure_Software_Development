@@ -43,6 +43,8 @@ function get_article_list($dbconn){
 return run_query($dbconn, $query);
 }
 
+
+
 function get_article($dbconn, $aid) {
 
 $query = pg_query_params($dbconn,
@@ -70,6 +72,35 @@ $query = pg_query_params($dbconn,
 		
 return run_query($dbconn, $query);
 }
+
+function get_article_perms($dbconn, $aid) {
+
+$query = pg_query_params($dbconn,
+		'SELECT quote_ident(CAST($1 AS text))', array($aid));
+		
+	$sql= 
+		"SELECT 
+		articles.created_on as date,
+		articles.aid as aid,
+		articles.title as title,
+		authors.id as author,
+		articles.stub as stub,
+		articles.content as content
+		FROM 
+		articles
+		INNER JOIN
+		authors ON articles.author=authors.id
+		WHERE
+		aid='".$aid."'
+		LIMIT 1";
+		
+		$aid = pg_fetch_result($query, 0, 0); // safe
+		
+		$query = pg_query_params($dbconn, $sql, array());
+		
+return run_query($dbconn, $query);
+}
+
 
 function delete_article($dbconn, $aid) {
 
