@@ -1,10 +1,13 @@
 <?php include("templates/page_header.php");?>
 <?php include("lib/auth.php") ?>
 <?php
+$author = $_SESSION['id'];
+if($author >= 1){
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
 		$author = $_SESSION['id'];	
 		add_article($dbconn, $_POST['title'], $_POST['content'], $author);
 		Header ("Location: /");		
+	}
 	}
 ?>
 
