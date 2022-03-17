@@ -2,6 +2,10 @@
 <?php include("lib/auth.php") ?>
 <?php
 
+$author = $_SESSION['id'];
+$result=get_article_perms($dbconn, $aid);
+$row = pg_fetch_array($result, 0);
+if($row['author'] == $author || $author == "1"){
 if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$aid = $_GET['aid'];	
 	$result=get_article($dbconn, $aid);
@@ -12,6 +16,7 @@ if($_SERVER['REQUEST_METHOD'] == 'GET') {
 	$aid = $_POST['aid'];
 	$result=update_article($dbconn, $title, $content, $aid);
 	Header ("Location: /");
+}
 }
 ?>
 
