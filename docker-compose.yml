@@ -4,7 +4,6 @@ services:
 
   nginx:
     image: nginx:latest
-    #Port changed to 443 for the nginx server
     ports:
       - "443:443"
     volumes:
